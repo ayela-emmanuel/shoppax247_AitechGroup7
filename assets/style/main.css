@@ -1,0 +1,11 @@
+
+section>div{
+    font-family: sans-serif;
+    box-shadow: -2px 2px 4px rgba(0, 0, 0, .2);
+    padding: 5px 8px;
+    width: 500px;
+    border-radius: 10px;
+    margin: 10px;
+    display: flex;
+    justify-content: space-between;
+}
