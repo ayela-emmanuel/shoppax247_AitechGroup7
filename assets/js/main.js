@@ -1,4 +1,5 @@
 
+
 var handler = document.getElementById("handler");
 
 
@@ -69,5 +70,4 @@ function GetTasks(){
 
 
 GetTasks();
-
 
