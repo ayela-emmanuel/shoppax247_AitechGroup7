@@ -1,54 +1,52 @@
-<link rel="stylesheet" href="/assets/style/main.css">
-<?php
+<?php 
 session_start();
+include __DIR__."/db/users_util.php";
 
-$tasks = $_SESSION["tasks"] ?? [];
 
-if(isset($_POST["form"])){
+if(isset($_POST["register"])){
+    $name = $_POST["name"]?? null;
+    $email = $_POST["email"]?? null;
+    $pwd = $_POST["pwd"]?? null;
+
+    // Validation 
+    try{
+        $result = create_user($name, $email, $pwd);
+        if($result ){
+            echo "Created"; 
+        }else{
+            echo "Failed To Create";
+        }
+    }catch(InvalidArgumentException $e){
+        echo $e->getMessage();
+    }
     
-    
-    $tasks[] = $_POST["task"];
 
-    $_SESSION["tasks"] = $tasks;
 }
 
-if(isset($_GET["clear"])){
-    session_destroy();
-    header("Location: index.php");
-}
-
-if(isset($_GET["delete"])){
-    $index = $_GET["delete"]?? -1; 
-    array_splice($tasks,$index,1);
-    $_SESSION["tasks"] = $tasks;
-    header("Location: index.php");
-}
+var_dump($_POST);
 
 
 ?>
 
-<section>
-    <?php
-    foreach($tasks as $key => $task){
-    ?>
-        <div>
-            <a style="color: red;" href="index.php?delete=<?php echo $key?>">Delete</a>
-            
-            <?php echo $task?>
-            
-        </div>
-    <?php
-    }
-    ?>
-</section>
 
+<form name="login" method="post">
 
-
-
-
-<form method="post">
-    <input type="text" name="task">
-    <button name="form" value="todo">submit</button>
+</form>
+<form  method="post">
+    <div>
+        <label>Username</label>
+        <input type="Text" name="name" />
+    </div>
+    <div>
+        <label>Email</label>
+        <input type="Email" name="email" />
+    </div>
+    <div>
+        <label>Password</label>
+        <input type="Password" name="pwd" />
+    </div>
+    <button name="register" >submit</button>
 </form>
 
-<a href="index.php?clear=1">Clear Data</a>
+
+
