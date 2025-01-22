@@ -80,7 +80,7 @@ function update_user_password(int $id, string $new_pwd, $old_pwd){
 
 function verify_user_pwd_by_id(int $id,$pwd){
     $user = get_user_by_id($id);
-    if($user??false){
+    if(!$user){
         return false;
     }
     if(!password_verify($pwd, $user["password"])){

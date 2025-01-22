@@ -1,0 +1,23 @@
+
+
+
+.grid
+{
+    display: grid;
+    grid-template-columns: auto auto auto;
+    padding: 20px;
+    gap: 10px;
+    margin: auto;
+    
+}
+.grid > *{
+    margin: auto;
+}
+
+.main_form{
+    margin: 20px auto ;
+    max-width: 500px;
+    padding:  40px 30px;
+    box-shadow: 2px 2px 5px rgb(183, 183, 183);
+    border-radius: 20px;
+}

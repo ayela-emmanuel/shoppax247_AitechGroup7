@@ -1,52 +1,52 @@
-<?php 
-session_start();
-include __DIR__."/db/users_util.php";
+<?php
+include_once __DIR__."/db/products_util.php";
 
-
-if(isset($_POST["register"])){
-    $name = $_POST["name"]?? null;
-    $email = $_POST["email"]?? null;
-    $pwd = $_POST["pwd"]?? null;
-
-    // Validation 
-    try{
-        $result = create_user($name, $email, $pwd);
-        if($result ){
-            echo "Created"; 
-        }else{
-            echo "Failed To Create";
-        }
-    }catch(InvalidArgumentException $e){
-        echo $e->getMessage();
-    }
-    
-
-}
-
-var_dump($_POST);
-
+$products = get_products();
 
 ?>
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/css/custom.css">
+</head>
+<body>
 
-<form name="login" method="post">
+<?php include __DIR__."/components/nav.php"?>
 
-</form>
-<form  method="post">
-    <div>
-        <label>Username</label>
-        <input type="Text" name="name" />
+
+
+
+<div class="grid">
+<?php
+
+
+foreach($products as $key=>$product) { 
+    # code...
+?>
+<div class="card" style="width: 18rem;">
+    <img class="card-img-top" src="<?php echo $product['img']?>" alt="Card image cap"/>
+    <div class="card-body">
+        <h5 class="card-title"><?php echo htmlspecialchars($product['name'])?></h5>
+        <p class="card-text">NGN <?= $product['price']?></p>
+        <a href="#" class="btn btn-primary">Go somewhere</a>
     </div>
-    <div>
-        <label>Email</label>
-        <input type="Email" name="email" />
-    </div>
-    <div>
-        <label>Password</label>
-        <input type="Password" name="pwd" />
-    </div>
-    <button name="register" >submit</button>
-</form>
+</div>
+<?php }  ?>
+<?php ?>
+</div>
 
 
 
+
+
+
+
+
+</body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</html>
