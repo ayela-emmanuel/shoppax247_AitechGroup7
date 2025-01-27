@@ -118,3 +118,63 @@ function add_product_to_cart(int $id,int $user_id){
     }
     return;
 }
+
+
+
+///========================Submission============================================================
+
+
+
+
+
+function HandleProductCreation(): void{
+    $name = $_POST["name"]??null;
+    $price = $_POST["price"]??null;
+    $image = $_FILES["image"]??null;
+    $action = $_POST["action"]??null;
+    $allowed_types = [
+        "png", 
+        "jpg",
+        "jpeg",
+        "gif"
+    ];
+    $max_size = 2000000; //2mb
+    $valid_type = false;
+    foreach ($allowed_types as $e) {
+        if($e == explode("/",$image["type"])[1]){
+            $valid_type = true;
+            break;
+       }
+    }
+    if(!$valid_type){
+       throw new Exception("Error Processing Request: The image type was not allowed", 1);
+    } 
+
+
+
+    if($action == "create"){
+        // Validate Incoming Data
+        
+
+
+        
+        if(!$image){
+
+        }else{
+            $image_name = uniqid("img_").".". explode("/",$image["type"])[1];
+            $image_path = __DIR__."/../uploads/".$image_name;
+            var_dump($image);
+            $result = move_uploaded_file($image["tmp_name"],$image_path);
+            if($result){
+                create_product($_SESSION["user"]["id"], $name, $price,"/uploads/".$image_name);
+            }
+            //
+
+        }
+    }
+
+
+}
+
+
+

@@ -12,8 +12,8 @@ function create_user(string $name, string $email, string $pwd){
         return false;
     }
 
-    $Query = "INSERT INTO `users` (`name`,`email`,`password`) VALUES
-    (?,?,?)";
+    $Query = "INSERT INTO `users` (`name`,`email`,`password`, `cart`) VALUES
+    (?,?,?,'[]')";
     $pwd = password_hash($pwd,PASSWORD_DEFAULT);
 
     $stmt = $Connection->prepare($Query);

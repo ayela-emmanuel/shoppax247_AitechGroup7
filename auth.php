@@ -61,7 +61,7 @@ if(isset($_POST["register"])){
 
 </head>
 <body>
-    <?php include __DIR__."/components/nav.php"?>
+    <?php include __DIR__."/includes/header.php"?>
     
     <div class="container">
     <form class="main_form" method="POST">
