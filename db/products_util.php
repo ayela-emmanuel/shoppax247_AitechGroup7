@@ -130,7 +130,7 @@ function add_product_to_cart(int $id,int $user_id){
 function HandleProductCreation(): void{
     $name = $_POST["name"]??null;
     $price = $_POST["price"]??null;
-    $image = $_FILES["image"]??null;
+    $image = $_FILES["image"]??0;
     $action = $_POST["action"]??null;
     $allowed_types = [
         "png", 
@@ -149,7 +149,12 @@ function HandleProductCreation(): void{
     if(!$valid_type){
        throw new Exception("Error Processing Request: The image type was not allowed", 1);
     } 
-
+    if(count($name) > 1 && count($name) < 100){
+       throw new Exception("Error Processing Request:Your Product Name is Invalid", 1);
+    }
+    if($price<10){
+        throw new Exception("Your Price is Below Minimal", 1);
+    }
 
 
     if($action == "create"){
