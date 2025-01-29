@@ -124,6 +124,17 @@ function add_product_to_cart(int $id,int $user_id){
 ///========================Submission============================================================
 
 
+function HandleProductDelete(){
+        $id = $_GET['delete']??0;
+        if(!$id){
+            header("Location: manage_products.php");
+        }
+
+        delete_product_by_id($id);
+        header("Location: manage_products.php");
+}
+
+
 
 
 
@@ -149,7 +160,7 @@ function HandleProductCreation(): void{
     if(!$valid_type){
        throw new Exception("Error Processing Request: The image type was not allowed", 1);
     } 
-    if(count($name) > 1 && count($name) < 100){
+    if(empty($name)){
        throw new Exception("Error Processing Request:Your Product Name is Invalid", 1);
     }
     if($price<10){
@@ -168,7 +179,7 @@ function HandleProductCreation(): void{
         }else{
             $image_name = uniqid("img_").".". explode("/",$image["type"])[1];
             $image_path = __DIR__."/../uploads/".$image_name;
-            var_dump($image);
+            //var_dump($image);
             $result = move_uploaded_file($image["tmp_name"],$image_path);
             if($result){
                 create_product($_SESSION["user"]["id"], $name, $price,"/uploads/".$image_name);

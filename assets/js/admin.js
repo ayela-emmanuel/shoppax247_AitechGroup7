@@ -14,4 +14,16 @@ create_buttons.forEach(element => {
 
 
 
+setTimeout(()=>{
+    var error_message = document.querySelectorAll(".error-message");
+    error_message.forEach(element => {
+        element.remove();
+    });
+    
+    //error-message
+}
+,8000)
+
+
+
 

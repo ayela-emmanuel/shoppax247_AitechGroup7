@@ -1,15 +1,29 @@
 <?php
+
 session_start();
 include_once __DIR__."/db/products_util.php";
 if(!isset($_SESSION["user"])){
     header("Location: /auth.php");
 }
 
-if($_SERVER["REQUEST_METHOD"] == "POST"){
-    HandleProductCreation();
+try{
+    if($_SERVER["REQUEST_METHOD"] == "POST"){
+        HandleProductCreation();
+    }
+    if(isset($_GET['delete'])){
+        HandleProductDelete();
+    }
+}catch(Exception $e){
+    $message = $e->getMessage();
+    echo "<div class='error-message'>$message</div>";
 }
 
+
 $products = get_products();
+
+
+
+
 include __DIR__."/includes/header.php"
 
 ?>
@@ -53,7 +67,7 @@ include __DIR__."/includes/header.php"
 
 
 
-
+<div class="grid">
 <?php
 
 
@@ -65,22 +79,14 @@ foreach($products as $key=>$product) {
     <div class="card-body">
         <h5 class="card-title"><?php echo htmlspecialchars($product['name'])?></h5>
         <p class="card-text">NGN <?= $product['price']?></p>
-        <a href="#" class="btn btn-primary">Delete</a>
+        <a href="?delete=<?= $product["id"]?>" class="btn btn-danger">Delete</a>
         <a href="#" class="btn btn-primary">Modify</a>
     </div>
 </div>
 <?php }  ?>
+</div>
 
 
-
-<ul>
-    <?php foreach ($products as $product) {
-    ?>
-    <li>
-        <?= htmlspecialchars($product["name"]) ?>
-    </li>
-    <?php }?>
-</ul>
 
 <script src="/assets/js/admin.js"></script>
 <?php include __DIR__."/includes/footer.php"?>
