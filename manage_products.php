@@ -16,7 +16,12 @@ include __DIR__."/includes/header.php"
 
 <body>
 <?php include __DIR__."/includes/nav.php"?>
+<link rel="stylesheet" href="/assets/css/admin.css">
 
+<div class="container">
+    <button class="btn create_btn btn-primary">Create Product</button>
+</div>
+<div id="product-form-container">
 
 
 <form action="" method="post" enctype="multipart/form-data">
@@ -35,11 +40,13 @@ include __DIR__."/includes/header.php"
         <label for="name">Product Image</label>
         <input type="file" name="image">
     </div>
+    <br/>
 
-    <button name="action" value="create">Submit</button>
+    <button class="btn create_btn btn-danger" type="button">Close</button>
+
+    <button  class="btn btn-success" name="action" value="create">Submit</button>
 </form>
-
-<hr>
+</div>
 
 
 
@@ -75,6 +82,6 @@ foreach($products as $key=>$product) {
     <?php }?>
 </ul>
 
-
+<script src="/assets/js/admin.js"></script>
 <?php include __DIR__."/includes/footer.php"?>
 </body>
