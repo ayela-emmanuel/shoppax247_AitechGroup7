@@ -12,6 +12,13 @@ $products = get_products();
 
 
 
+<div class="container">
+<button  class="btn btn-primary" onclick="showCart()">Show Cart</button>
+<div id="cart">
+
+</div>
+
+</div>
 
 <div class="grid">
 <?php
@@ -25,7 +32,7 @@ foreach($products as $key=>$product) {
     <div class="card-body">
         <h5 class="card-title"><?php echo htmlspecialchars($product['name'])?></h5>
         <p class="card-text">NGN <?= $product['price']?></p>
-        <a href="#" class="btn btn-primary">Go somewhere</a>
+        <button  class="btn btn-primary" onclick="addToCart(<?php echo $product['id']?>)">Add To Cart</button>
     </div>
 </div>
 <?php }  ?>
@@ -40,5 +47,6 @@ foreach($products as $key=>$product) {
 <?php include __DIR__."/includes/footer.php"?>
 
 
+<script src="/assets/js/main.js"></script>
 </body>
 </html>

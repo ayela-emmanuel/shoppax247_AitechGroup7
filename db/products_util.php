@@ -119,7 +119,64 @@ function add_product_to_cart(int $id,int $user_id){
     return;
 }
 
+function remove_product_from_cart(int $id,int $user_id){
+    global $Connection;
+    $product = get_product_by_id($id);
+    
+    if($product == null){
+        throw new InvalidArgumentException("Product Not Found");
+    }
+    $user= get_user_by_id($user_id);
+    if($user == null){
+        throw new InvalidArgumentException("User Not Found");
+    }
+    $cart = json_decode($user["cart"]??"[]");
+    foreach ($cart as $key => $value) {
+        if($key == $id){
+            array_splice($cart,$key,1);
+        }
+    }
 
+    $Query = "UPDATE `users` SET `cart` = ?  where `id` = ?";
+    $stmt = $Connection->prepare($Query);
+    $result = $stmt->execute([json_encode($cart), $user_id]);
+    if($result){
+        if($stmt->affected_rows){
+            return true;
+        }
+        throw new InvalidArgumentException("User Not Found");
+    }
+    return;
+}
+
+
+function get_cart(int $user_id){
+    global $Connection;
+    $user = get_user_by_id($user_id);
+
+    if($user){
+        $cart = json_decode($user['cart'], false);
+        $str_store = [];
+        foreach ($cart as $a) {
+            $str_store[] = "?";
+        }
+        $str_store = implode(",", $str_store );
+
+
+
+
+        $query = "SELECT * from `products` WHERE `id` IN ($str_store)" ;
+
+        $stmt = $Connection->prepare($query);
+
+        $stmt->execute($cart);
+        $result = $stmt->get_result();
+        $data = $result->fetch_all(MYSQLI_ASSOC);
+
+        return $data ;
+    }
+    return null;
+}
 
 ///========================Submission============================================================
 
